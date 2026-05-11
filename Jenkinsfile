@@ -20,7 +20,7 @@ pipeline {
   }
 
   environment {
-    COMPOSE_FILE  = 'cutechat-devops/docker-compose.yml'
+    COMPOSE_FILE  = 'chatlingss-devops/docker-compose.yml'
     IMAGE_TAG     = "${env.GIT_COMMIT?.take(7) ?: 'latest'}"
     // If a registry is supplied, images are tagged as registry/service:commit-sha
     REGISTRY_PREFIX = "${params.DOCKER_REGISTRY?.trim() ? params.DOCKER_REGISTRY.trim() + '/' : ''}"
