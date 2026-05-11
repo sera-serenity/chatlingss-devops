@@ -1,0 +1,75 @@
+/* ======================================================
+   CuteChat Global Styles — React Frontend
+   ====================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pink:    #ff80bf;
+  --pink-lt: #ffb3d9;
+  --lavender:#9d8df1;
+  --sky:     #70d6ff;
+  --mint:    #85ffcc;
+  --lilac:   #c9a0ff;
+  --bg:      linear-gradient(160deg, #85ffcc 0%, #c9a0ff 55%, #ffb3d9 100%);
+  --text:    #35263d;
+  --radius:  16px;
+  --shadow:  0 6px 28px rgba(53,38,61,0.16);
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(160deg, #85ffcc 0%, #c9a0ff 55%, #ffb3d9 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 22px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, var(--pink), var(--lavender));
+  color: #fff;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(198,184,255,0.4);
+}
+button:hover  { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(198,184,255,0.5); }
+button:active { transform: translateY(0); }
+
+input, select {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border: 2px solid var(--pink-lt);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus {
+  border-color: var(--lavender);
+  box-shadow: 0 0 0 3px rgba(198,184,255,0.15);
+}
+
+/* scrollbar — cute thin pastel */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ffd1e8; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #ff9fcf; }

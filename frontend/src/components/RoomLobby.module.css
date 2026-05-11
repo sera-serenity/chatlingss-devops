@@ -1,0 +1,584 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap');
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  color: #2a1e30;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px rgba(80, 58, 90, 0.05);
+  z-index: 10;
+}
+
+.navLogo {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoText {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.4rem;
+  color: #ff80bf;
+  text-shadow: 3px 3px 0 #fff, 5px 5px 0 #ffb3d9;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #8a7a9a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: -5px;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.userTag {
+  background: #fff;
+  border: 3px solid #ffb3d9;
+  padding: 8px 24px 8px 10px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 179, 217, 0.2);
+}
+
+.avatarCircle {
+  background: #ffeff9;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  border: 2px solid #fff;
+}
+
+.username {
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #2a1e30;
+}
+
+.logoutBtn {
+  background: transparent;
+  border: 2px solid #8a7a9a;
+  color: #8a7a9a;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Hero */
+.hero {
+  padding: 60px 60px 20px;
+  text-align: center;
+}
+
+.heroTitle {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3.5rem;
+  color: #2a1e30;
+  margin-bottom: 10px;
+  filter: drop-shadow(4px 4px 0 #fff);
+}
+
+.heroSub {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #4a3a5a;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Body & Tabs */
+.body {
+  flex: 1;
+  padding: 40px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.headerLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 6px;
+  border-radius: 20px;
+  gap: 8px;
+  border: 2px solid #fff;
+}
+
+.tabBtn {
+  padding: 12px 30px;
+  border-radius: 15px;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #8a7a9a;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.activeTab {
+  background: #fff;
+  color: #ff80bf;
+  box-shadow: 0 4px 12px rgba(255, 128, 191, 0.15);
+}
+
+.filterGroup {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dropdown {
+    padding: 12px 20px;
+    border-radius: 18px;
+    border: 2px solid #fff;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #4a3a5a;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.dropdown:focus {
+    border-color: #ffb3d9;
+}
+
+.filterBar {
+    display: flex;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 4px;
+    border-radius: 18px;
+    gap: 5px;
+    border: 2px solid #fff;
+}
+
+.filterBtn {
+    padding: 8px 20px;
+    border-radius: 14px;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: #8a7a9a;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.activeFilter {
+    background: #ffb3d9;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 179, 217, 0.3);
+}
+
+.createBtn {
+  background: linear-gradient(135deg, #ff80bf, #ffb3d9);
+  color: #fff;
+  border: none;
+  padding: 18px 36px;
+  border-radius: 24px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 128, 191, 0.3);
+  border-bottom: 5px solid #ff4d88;
+}
+
+/* Grid & Cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.roomCard {
+  background: #fff;
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 6px solid #fff;
+  box-shadow: 0 15px 45px rgba(80, 58, 90, 0.1);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.roomCard:hover {
+  transform: translateY(-8px);
+}
+
+.cardPreview {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.visibilityBadge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+
+.typeBadge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: rgba(42, 30, 48, 0.8);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+
+.public {
+    background: #4caf50;
+    color: white;
+}
+
+.private {
+    background: #ff80bf;
+    color: white;
+}
+
+.howToBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #2a1e30;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.cardInfo {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.roomName {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #2a1e30;
+    margin-bottom: 8px;
+}
+
+.roomMeta {
+    font-size: 1rem;
+    color: #5a4a6a;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.playerCount, .onlineStatus {
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: #4caf50;
+    background: #f0fff0;
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+.joinBtn {
+    background: #2a1e30;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 100px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.roomCard:hover .joinBtn {
+    background: #ff80bf;
+}
+
+/* Modals */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 30, 48, 0.4);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: #fff;
+    width: 90%;
+    max-width: 550px;
+    border-radius: 40px;
+    padding: 40px;
+    box-shadow: 0 40px 100px rgba(42, 30, 48, 0.3);
+    border: 8px solid #fff;
+    animation: popIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.modalTitle {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem;
+    color: #2a1e30;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modalSub {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #5a4a6a;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.configBody {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.label {
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: #ff80bf;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.inputLarge {
+    padding: 18px 24px;
+    border-radius: 20px;
+    border: 3px solid #f0f0f0;
+    font-size: 1.3rem;
+    font-weight: 900;
+    background: #fafafa;
+    width: 100%;
+    color: #2a1e30;
+}
+
+.inputLarge::placeholder {
+    color: #ccc;
+}
+
+.playerSelect, .roundSelect {
+    display: flex;
+    gap: 12px;
+}
+
+.numBtn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 15px;
+    border: 3px solid #f0f0f0;
+    background: white;
+    font-weight: 800;
+    cursor: pointer;
+    color: #4a3a5a;
+}
+
+.selectedNum {
+    background: #ffb3d9;
+    border-color: #ff80bf;
+    color: white;
+}
+
+.modeGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.modeBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    border-radius: 20px;
+    border: 3px solid #f0f0f0;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.selectedMode {
+    background: #fff0fb;
+    border-color: #ffb3d9;
+}
+
+.modeTexts b { font-size: 1.1rem; color: #2a1e30; display: block; }
+.modeTexts span { font-size: 0.8rem; color: #8a7a9a; }
+
+.tournamentToggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+    padding: 15px 25px;
+    border-radius: 20px;
+    border: 3px solid #f0f0f0;
+}
+
+.toggleBtn {
+    padding: 10px 24px;
+    border-radius: 15px;
+    border: none;
+    background: #ddd;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.toggled {
+    background: #ff80bf;
+    color: white;
+}
+
+.modalBtns {
+    display: flex;
+    gap: 15px;
+}
+
+.cancelBtn {
+    flex: 1;
+    padding: 16px;
+    border-radius: 20px;
+    border: 3px solid #f0f0f0;
+    background: white;
+    font-weight: 900;
+    color: #8a7a9a;
+    cursor: pointer;
+}
+
+.submitBtn {
+    flex: 2;
+    padding: 16px;
+    border-radius: 20px;
+    border: none;
+    background: #ff80bf;
+    color: white;
+    font-weight: 900;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 128, 191, 0.3);
+}
+
+.errMsg {
+    color: #ff4d88;
+    background: #fff0fb;
+    padding: 12px;
+    border-radius: 15px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.inviteText {
+    font-size: 1.2rem;
+    color: #4a3a5a;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.inviteText b {
+    display: block;
+    font-size: 2.2rem;
+    color: #ff80bf;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.loading {
+    text-align: center;
+    padding: 100px;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ffb3d9;
+}

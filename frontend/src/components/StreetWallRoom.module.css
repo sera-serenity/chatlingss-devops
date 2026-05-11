@@ -1,0 +1,119 @@
+.container {
+  width: 100vw;
+  height: 100vh; /* Adjust for navbar if needed */
+  position: relative;
+  overflow: hidden;
+  background: #35263d;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.topHud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 15px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hudBubble {
+  background: rgba(255,255,255,0.9);
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  color: #35263d;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+}
+
+.toolbar {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 20;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 30px;
+  border: 3px solid #c9a0ff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.toolSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.divider {
+  width: 25px;
+  height: 2px;
+  background: #ddd;
+}
+
+.colorBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.colorBtn:hover { transform: scale(1.1); }
+.colorBtn.active { transform: scale(1.2); border-color: #35263d; }
+
+.sizeBtn {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.sizeBtn:hover { background: #f0e6ff; }
+.sizeBtn.active { background: #c9a0ff; }
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 8px;
+  border-radius: 12px;
+}
+.actionBtn:hover { transform: scale(1.1); background: rgba(201, 160, 255, 0.1); }
+.activeAction { background: #ffb3d9 !important; }
+
+
+.opacityControl {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.5);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+.opacityControl label {
+  font-size: 1.2rem;
+}
+.opacityControl input[type="range"] {
+  width: 60px;
+  cursor: pointer;
+  accent-color: #ff80bf;
+}

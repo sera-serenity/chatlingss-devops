@@ -1,0 +1,285 @@
+.gameContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%);
+  font-family: 'Nunito', sans-serif;
+}
+
+.header {
+  height: 60px;
+  background: white;
+  border-bottom: 2px solid #81d4fa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  z-index: 10;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.headerLeft h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #35263d;
+}
+
+.leaveBtn {
+  background: #e1f5fe;
+  border: none;
+  color: #0288d1;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.timerDisplay {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ff4d94;
+  background: #fff0f9;
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: 1.5px solid #ffb3d9;
+}
+
+.gameBody {
+  flex: 1;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.raceArea {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.raceBoard {
+  flex: 1;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 3px solid #81d4fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add a floating typography background effect */
+.raceBoard::before {
+  content: "A B C ⌨️ D E F 🔥 G H I 🚀";
+  position: absolute;
+  top: 10px;
+  left: -50%;
+  width: 200%;
+  font-size: 4rem;
+  color: rgba(129, 212, 250, 0.1);
+  font-weight: 900;
+  white-space: nowrap;
+  animation: scrollText 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scrollText {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.statusMsg {
+  color: #8a7a9a;
+  font-weight: 800;
+  z-index: 1;
+}
+
+.countdown {
+  font-size: 8rem;
+  color: #ff80bf;
+  margin: 0;
+  text-shadow: 0 10px 20px rgba(255, 128, 191, 0.3);
+  z-index: 1;
+  animation: popInOut 1s ease-in-out infinite;
+}
+
+@keyframes popInOut {
+  0% { transform: scale(0.8); opacity: 0; }
+  20% { transform: scale(1.1); opacity: 1; }
+  80% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.2); opacity: 0; }
+}
+
+.sentenceCard {
+  background: #fdf2f8;
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px dashed #ffb3d9;
+  z-index: 1;
+  max-width: 90%;
+}
+
+.sentenceWrapper {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+
+.matchedText {
+  color: #4CAF50;
+  text-decoration: underline;
+  text-decoration-color: #a5d6a7;
+  text-decoration-thickness: 4px;
+}
+
+.unmatchedText {
+  color: #8a7a9a;
+}
+
+.typeInputContainer {
+  height: 80px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 3px solid #81d4fa;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.typeInput {
+  width: 100%;
+  font-size: 1.5rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  color: #35263d;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.typeInput:disabled {
+  color: #c0a8d0;
+}
+
+/* Sidebar reuse from drawing game */
+.sidebar {
+  flex: 1;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.leaderboard {
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border: 2px solid #81d4fa;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.leaderboard h3 { margin: 0 0 10px 0; color: #35263d; font-size: 1.1rem; }
+
+.lbRow {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.lbRank { font-weight: 800; color: #8a7a9a; width: 25px; }
+.lbName { flex: 1; font-weight: 700; color: #35263d; }
+.lbScore { font-weight: 800; color: #0288d1; }
+
+.chatWrapper {
+  flex: 1;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border: 2px solid #81d4fa;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chatLog {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.msg { font-size: 0.9rem; color: #35263d; font-weight: 600; line-height: 1.3; }
+.systemMsg { color: #8a7a9a; font-style: italic; font-size: 0.8rem; text-align: center; margin: 4px 0; }
+.successMsg { color: #4CAF50; font-weight: 800; background: #e8f5e9; padding: 4px 8px; border-radius: 8px; text-align: center; }
+
+/* ── Overlays ── */
+.waitingOverlay, .countdownOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.waitingBox {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    border: 6px solid #ffb3d9;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.waitingEmoji {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.playerCount {
+    margin-top: 20px;
+    background: #fff0fb;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 800;
+    color: #ff80bf;
+    display: inline-block;
+}
+
+.countdownOverlay {
+    background: rgba(255, 179, 217, 0.4);
+    flex-direction: column;
+}
+
+.countdownValue {
+    font-size: 8rem;
+    font-weight: 900;
+    color: #ff80bf;
+    text-shadow: 0 10px 0 #ffffff;
+}
+
+.countdownText {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #35263d;
+}

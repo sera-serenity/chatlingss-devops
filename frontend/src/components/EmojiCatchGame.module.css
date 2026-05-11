@@ -1,0 +1,183 @@
+.gameWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #e8f5e9;
+  padding: 15px;
+  gap: 12px;
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+}
+
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  padding: 12px 24px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(135, 189, 118, 0.4);
+  box-shadow: 0 10px 30px rgba(53, 38, 61, 0.1);
+}
+
+.backBtn {
+  background: #f1f8e9;
+  border: 1.5px solid #8bc34a;
+  color: #558b2f;
+  padding: 7px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  background: #8bc34a;
+  color: white;
+  transform: scale(1.05);
+}
+
+.gameTitle {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #558b2f;
+}
+
+.timerBox {
+  background: #ffeb3b;
+  padding: 6px 14px;
+  border-radius: 999px;
+  color: #35263d;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.canvasContainer {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.canvas {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  background: white;
+  border-radius: 28px;
+  box-shadow: 0 0 60px rgba(53, 38, 61, 0.15);
+  border: 4px solid #fff;
+}
+
+.notifications {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.notifItem {
+  background: rgba(255, 255, 255, 0.95);
+  color: #35263d;
+  padding: 10px 20px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.scores {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 24px;
+  width: 180px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid #8bc34a;
+}
+
+.scoreHead {
+  font-weight: 900;
+  color: #558b2f;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.scoreRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-weight: 800;
+  color: #35263d;
+  border-bottom: 1px dashed rgba(139, 195, 74, 0.2);
+  font-size: 0.85rem;
+}
+
+.points {
+  color: #558b2f;
+}
+
+/* ── Overlays ── */
+.waitingOverlay, .countdownOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.waitingBox {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    border: 6px solid #ffb3d9;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.waitingEmoji {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.playerCount {
+    margin-top: 20px;
+    background: #fff0fb;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 800;
+    color: #ff80bf;
+    display: inline-block;
+}
+
+.countdownOverlay {
+    background: rgba(255, 179, 217, 0.4);
+    flex-direction: column;
+}
+
+.countdownValue {
+    font-size: 8rem;
+    font-weight: 900;
+    color: #ff80bf;
+    text-shadow: 0 10px 0 #ffffff;
+}
+
+.countdownText {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #35263d;
+}

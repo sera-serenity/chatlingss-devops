@@ -1,0 +1,324 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { io } from 'socket.io-client';
+import { 
+  drawCharacter, drawSceneBase, applyPhysics, drawPlatform,
+  SCALE, VW as DEFAULT_VW, VH as DEFAULT_VH, CW, CH, JUMP_V, pickLine, roundRect 
+} from '../utils/gameRender';
+import styles from './TagGame.module.css';
+import ResultModal from './ResultModal';
+import TournamentOverlay from './TournamentOverlay';
+
+// Tag specific zoomed-out map dimensions
+const TAG_VW = 1800;
+const TAG_VH = 800;
+const TAG_SCALE = 0.45;
+
+export default function TagGame({ token, user, room, onLeaveRoom }) {
+  const canvasRef = useRef(null);
+  const [socket, setSocket] = useState(null);
+  const [gameState, setGameState] = useState(null);
+  const playersRef = useRef({});
+  const localRef = useRef({ 
+    x: TAG_VW * 0.1, y: TAG_VH * 0.85 - CH, vx: 0, vy: 0, onGround: false,
+    lastSync: 0
+  });
+  const gameStateRef = useRef(null);
+  const lastUpdateRef = useRef(performance.now());
+  const [notifications, setNotifications] = useState([]);
+  const [tournamentData, setTournamentData] = useState(null);
+
+  // ── Game lifecycle state ──────────────────────────────────────────────────
+  const [lifecycle, setLifecycle] = useState({ gameId: null, status: 'idle', scores: {}, players: [] });
+  const socketRef = useRef(null);
+
+  const addNotification = (text) => {
+    setNotifications(prev => [...prev.slice(-3), { text, id: Date.now() }]);
+  };
+
+  useEffect(() => {
+    const s = io(process.env.REACT_APP_GAME_URL || 'http://localhost:5004', {
+      auth: { token },
+      query: { roomId: room._id || room.name, roomType: 'game', gameType: 'tag_game' }
+    });
+    setSocket(s);
+    socketRef.current = s;
+    s.emit('joinGame', { room: room._id || room.name });
+
+    s.on('gameState', (state) => {
+        setGameState(state);
+        gameStateRef.current = state;
+        
+        // Sync players from server state
+        if (state.players) {
+            Object.entries(state.players).forEach(([id, p]) => {
+                if (id !== s.id) {
+                    playersRef.current[id] = { ...playersRef.current[id], ...p };
+                }
+            });
+        }
+    });
+    s.on('playerUpdated', (p) => { 
+        if (p.id !== s.id) {
+            playersRef.current[p.id] = { ...playersRef.current[p.id], ...p };
+        } 
+    });
+    s.on('playerLeft', (data) => {
+        delete playersRef.current[data.id];
+    });
+    s.on('message', (m) => { if (m.isSystem) addNotification(m.text); });
+    s.on('playerTagged', (data) => addNotification(`🏃 ${data.taggerId === s.id ? 'You are' : 'Friend is'} IT!`));
+
+    // ── Pipeline events ──
+    s.on('GAME_STARTED', (data) => {
+      setLifecycle({ gameId: data.gameId, status: 'active', scores: {}, players: data.players || [] });
+    });
+    s.on('GAME_ENDED', (data) => {
+      setLifecycle(prev => ({ ...prev, status: 'ended', scores: data.scores || {}, gameId: data.gameId }));
+    });
+
+    s.on('LEADERBOARD_UPDATED', (data) => {
+      setTournamentData(data);
+    });
+    s.on('TOURNAMENT_ENDED', (data) => {
+      setTournamentData(data);
+      addNotification("🏆 TOURNAMENT FINISHED!");
+    });
+
+    return () => s.disconnect();
+  }, [token, room]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animId;
+
+    const keys = {};
+    const handleDown = (e) => { 
+        const k = e.key.toLowerCase();
+        if (['arrowleft','arrowright','arrowup','arrowdown','w','a','s','d',' '].includes(k)) { 
+            e.preventDefault(); 
+            keys[k] = true; 
+        } 
+    };
+    const handleUp = (e) => { keys[e.key.toLowerCase()] = false; };
+    window.addEventListener('keydown', handleDown);
+    window.addEventListener('keyup', handleUp);
+
+    const local = localRef.current;
+    local.avatar = user.avatar; local.color = user.color; local.username = user.username;
+    local.mood = 'happy'; local.action = 'idle';
+
+    const drawParkTree = (ctx, x, y) => {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.fillStyle = 'rgba(0,0,0,0.06)'; ctx.beginPath(); ctx.ellipse(15, 60, 30, 8, 0, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#8d6e63'; roundRect(ctx, 10, 40, 10, 25, 4); ctx.fill();
+        ctx.fillStyle = '#81c784';
+        ctx.beginPath(); ctx.arc(15, 30, 25, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(-5, 40, 18, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(35, 40, 18, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+    };
+
+    const platforms = [
+        {x: 200, y: TAG_VH * 0.65, w: 200},
+        {x: 500, y: TAG_VH * 0.50, w: 180},
+        {x: 800, y: TAG_VH * 0.60, w: 220},
+        {x: 1100, y: TAG_VH * 0.45, w: 160},
+        {x: 1400, y: TAG_VH * 0.55, w: 240},
+        {x: 350,  y: TAG_VH * 0.35, w: 150},
+        {x: 950,  y: TAG_VH * 0.30, w: 180},
+        {x: 1250, y: TAG_VH * 0.25, w: 200},
+        {x: 50,   y: TAG_VH * 0.75, w: 120},
+        {x: 1650, y: TAG_VH * 0.70, w: 120}
+    ];
+
+    const decor = [
+        {x: 150, y: TAG_VH * 0.85 - 65, type: 'tree'},
+        {x: 550, y: TAG_VH * 0.85 - 65, type: 'tree'},
+        {x: 950, y: TAG_VH * 0.85 - 65, type: 'tree'},
+        {x: 1350, y: TAG_VH * 0.85 - 65, type: 'tree'},
+        {x: 1700, y: TAG_VH * 0.85 - 65, type: 'tree'},
+        {x: 350, y: TAG_VH * 0.85 - 40, type: 'bush'}
+    ];
+
+    const loop = (now) => {
+        const dt = Math.min(0.033, (now - lastUpdateRef.current) / 1000);
+        lastUpdateRef.current = now;
+
+        const speed = 420;
+        if (keys['arrowleft'] || keys['a']) local.vx = -speed;
+        else if (keys['arrowright'] || keys['d']) local.vx = speed;
+        else local.vx *= 0.85;
+
+        if ((keys['arrowup'] || keys['w'] || keys[' ']) && local.onGround) {
+            local.vy = -JUMP_V * 1.05;
+            local.onGround = false;
+        }
+
+        applyPhysics(local, dt, TAG_VW, TAG_VH, TAG_VH * 0.85, platforms);
+
+        if (now - (local.lastSync || 0) > 40) {
+            socketRef.current?.emit('updatePosition', { x: local.x, y: local.y });
+            local.lastSync = now;
+        }
+
+        ctx.save();
+        ctx.scale(TAG_SCALE, TAG_SCALE);
+        ctx.clearRect(0, 0, TAG_VW, TAG_VH);
+        drawSceneBase(ctx, 'pink', TAG_VW, TAG_VH, TAG_VH * 0.85);
+        
+        decor.forEach(o => {
+            if (o.type === 'tree') drawParkTree(ctx, o.x, o.y);
+            else {
+                ctx.fillStyle = '#81c784'; ctx.beginPath(); ctx.ellipse(o.x, o.y + 20, 30, 20, 0, 0, Math.PI*2); ctx.fill();
+            }
+        });
+
+        platforms.forEach(p => drawPlatform(ctx, p));
+
+        ctx.font = '32px serif';
+        ctx.fillText('🦋', 100 + Math.sin(now/500)*400, 150 + Math.sin(now/400)*50);
+        ctx.fillText('🦋', 500 + Math.cos(now/600)*300, 250 + Math.sin(now/550)*80);
+
+        Object.entries(playersRef.current).forEach(([id, p]) => {
+            if (p.x === undefined || p.y === undefined) return;
+            p.lerpX = p.lerpX === undefined ? p.x : p.lerpX;
+            p.lerpY = p.lerpY === undefined ? p.y : p.lerpY;
+            p.lerpX += (p.x - p.lerpX) * 0.2; 
+            p.lerpY += (p.y - p.lerpY) * 0.2;
+        });
+
+        const state = gameStateRef.current;
+        const taggerId = state?.taggerId;
+
+        const playersList = [
+            { ...local, id: (socketRef.current?.id || 'local') },
+            ...Object.entries(playersRef.current).map(([id, p]) => ({
+                ...p, id, x: p.lerpX, y: p.lerpY 
+            }))
+        ].sort((a,b) => (a.y+CH) - (b.y+CH));
+
+        playersList.forEach(p => {
+            const isIt = p.id === taggerId;
+            const mood = isIt ? 'angry' : (p.mood || 'happy');
+            drawCharacter(ctx, {...p, mood}, p.username || 'Friend', { isIt });
+        });
+
+        ctx.restore();
+        animId = requestAnimationFrame(loop);
+    };
+    animId = requestAnimationFrame(loop);
+
+    return () => {
+        window.removeEventListener('keydown', handleDown);
+        window.removeEventListener('keyup', handleUp);
+        cancelAnimationFrame(animId);
+    };
+  }, [socket, user]);
+
+  // Build player lookup for ResultModal
+  const playerLookup = {
+    [socket?.id]: { username: user.username, avatar: user.avatar, color: user.color }
+  };
+  Object.entries(playersRef.current).forEach(([id, p]) => { playerLookup[id] = p; });
+
+  const handlePlayAgain = () => {
+    // 1. Reset source-of-truth refs
+    playersRef.current = {};
+    gameStateRef.current = null;
+    setNotifications([]);
+    
+    // 2. Reset local position
+    localRef.current.x = TAG_VW * 0.1;
+    localRef.current.y = TAG_VH * 0.85 - CH;
+    
+    // 3. Reset React state
+    setLifecycle({ gameId: null, status: 'idle', scores: {}, players: [] });
+    setGameState(null);
+
+    // 4. Re-join
+    socketRef.current?.emit('joinGame', { room: room._id || room.name });
+    console.log("🔄 Tag Game Refresh: State cleared.");
+  };
+
+  return (
+    <div className={styles.gameWrapper}>
+      <div className={styles.hud}>
+        <button onClick={onLeaveRoom} className={styles.backBtn}>← Quit</button>
+        <div className={styles.gameTitle}>Sparkle Tag! 🏃‍♀️💨</div>
+        <div className={styles.timerBox}>
+          <span className={styles.timerIcon}>⏱️</span>
+          <span className={styles.timerValue}>{gameState?.timeRemaining || 0}s</span>
+        </div>
+      </div>
+
+      <div className={styles.canvasContainer}>
+        <canvas ref={canvasRef} width={TAG_VW * TAG_SCALE} height={TAG_VH * TAG_SCALE} className={styles.canvas} />
+        
+        {/* ── Waiting UI ── */}
+        {gameState?.state === 'waiting' && (
+            <div className={styles.waitingOverlay}>
+                <div className={styles.waitingBox}>
+                    <h3>Waiting for more friends... ✨</h3>
+                    <div className={styles.playerCount}>
+                        🐾 {Object.keys(playerLookup).length} / 2 joined
+                    </div>
+                    <button className={styles.quitWaitingBtn} onClick={onLeaveRoom}>
+                        Back to Lobby
+                    </button>
+                </div>
+            </div>
+        )}
+
+        {/* ── Countdown UI ── */}
+        {gameState?.state === 'countdown' && (
+            <div className={styles.countdownOverlay}>
+                <div className={styles.countdownValue}>{gameState.timeRemaining}</div>
+                <div className={styles.countdownText}>GET READY! ✨</div>
+            </div>
+        )}
+
+        {tournamentData && (
+          <TournamentOverlay 
+            cumulativeScores={tournamentData.cumulativeScores} 
+            currentGame={tournamentData.currentGame} 
+            totalGames={tournamentData.totalGames}
+            players={lifecycle.players}
+          />
+        )}
+
+        <div className={styles.notifications}>
+          {notifications.map(n => (
+            <div key={n.id} className={styles.notifItem}>{n.text}</div>
+          ))}
+        </div>
+
+        <div className={styles.scores}>
+           <div className={styles.scoreHead}>Total Time IT 🔴</div>
+           {gameState?.scores && Object.entries(gameState.scores).sort((a,b)=>a[1]-b[1]).map(([id, time]) => (
+               <div key={id} className={styles.scoreRow}>
+                   <span className={id === gameState.taggerId ? styles.isItNow : ''}>{playersRef.current[id]?.username || (id === socket?.id ? user.username : '...')}</span>
+                   <span className={styles.points}>{time}s</span>
+               </div>
+           ))}
+        </div>
+      </div>
+
+      {/* ── Result Modal ──────────────────────────────────────────────── */}
+      {lifecycle.status === 'ended' && (
+        <ResultModal
+          gameId={lifecycle.gameId}
+          scores={lifecycle.scores}
+          players={playerLookup}
+          myId={socket?.id}
+          myUser={user}
+          gameType="tag_game"
+          onPlayAgain={handlePlayAgain}
+          onLeave={onLeaveRoom}
+        />
+      )}
+    </div>
+  );
+}

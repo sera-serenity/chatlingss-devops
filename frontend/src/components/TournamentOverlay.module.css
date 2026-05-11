@@ -1,0 +1,78 @@
+.overlay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 240px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 20px;
+    border: 3px solid white;
+    box-shadow: 0 10px 30px rgba(80, 58, 90, 0.1);
+    z-index: 100;
+    font-family: 'Nunito', sans-serif;
+    animation: slideIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 15px;
+    border-bottom: 2px dashed rgba(255, 128, 191, 0.3);
+    padding-bottom: 10px;
+}
+
+.title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #ff80bf;
+    text-shadow: 2px 2px 0 white;
+}
+
+.progress {
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: #8a7a9a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.leaderboard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+}
+
+.rank {
+    color: #ffb3d9;
+    width: 20px;
+}
+
+.name {
+    flex: 1;
+    color: #35263d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.score {
+    color: #ff80bf;
+    background: #fff0fb;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}

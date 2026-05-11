@@ -1,0 +1,200 @@
+.boardWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: white;
+  background-image: 
+    radial-gradient(#e0cce0 2px, transparent 2px),
+    radial-gradient(#e0cce0 2px, transparent 2px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  z-index: 10;
+  touch-action: none; /* Prevent scrolling when drawing on touch devices */
+}
+
+/* Painters (Top Right HUD) */
+.paintersArea {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.painterNode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.9);
+  padding: 6px 12px 6px 8px;
+  border-radius: 20px;
+  border: 2px solid;
+  box-shadow: 0 4px 12px rgba(80,58,90,0.1);
+  animation: floatIn 0.4s ease-out;
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.painterName {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #35263d;
+}
+
+/* Toolbar (Bottom Center) */
+.toolbar {
+  position: absolute;
+  bottom: 30px;
+  left: 35%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: 2px solid #ffb3d9;
+  box-shadow: 0 10px 30px rgba(80,58,90,0.15);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.toolSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.divider {
+  width: 2px;
+  height: 30px;
+  background: #f0e6ff;
+  border-radius: 2px;
+}
+
+.colorBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.colorBtn:hover { transform: scale(1.15); }
+.colorBtn.active { 
+  transform: scale(1.25); 
+  border-color: #35263d; 
+}
+
+.sizeBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #f0e6ff;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sizeBtn:hover { border-color: #ffb3d9; background: #fff0f9; }
+.sizeBtn.active { border-color: #ff80bf; background: #fff0f9; }
+
+.actionBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #fdf2f8;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.2s;
+}
+.actionBtn:hover { transform: translateY(-3px); background: #fff; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+.actionBtn.activeAction { background: #35263d; border: 2px solid #ff80bf; }
+
+.stickyNote {
+  position: absolute;
+  width: 140px;
+  min-height: 140px;
+  padding: 15px;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 50;
+  cursor: grab;
+  user-select: none;
+  font-family: 'Patrick Hand', cursive, sans-serif;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.stickyNote:active {
+  cursor: grabbing;
+  box-shadow: 10px 10px 25px rgba(0,0,0,0.15);
+  transform: scale(1.05) rotate(0deg) !important;
+  z-index: 100;
+}
+
+.noteContent {
+  font-size: 0.95rem;
+  color: #35263d;
+  font-weight: 600;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+
+.noteOwner {
+  font-size: 0.7rem;
+  color: rgba(0,0,0,0.5);
+  text-align: right;
+  margin-top: 10px;
+  font-weight: 800;
+}
+
+.deleteNoteBtn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: #ff4d4d;
+  color: white;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.stickyNote:hover .deleteNoteBtn {
+  opacity: 1;
+}

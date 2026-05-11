@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: cutechat-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - cutechat-net
+
+  redis:
+    image: redis:7
+    container_name: cutechat-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - cutechat-net
+
+  auth-service:
+    build: ./auth-service
+    container_name: cutechat-auth
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mongo
+    networks:
+      - cutechat-net
+
+  chat-service:
+    build: ./chat-service
+    container_name: cutechat-chat
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - JWT_SECRET=${JWT_SECRET}
+      - MESSAGE_SERVICE_URL=${MESSAGE_SERVICE_URL}
+    depends_on:
+      - message-service
+    networks:
+      - cutechat-net
+
+  message-service:
+    build: ./message-service
+    container_name: cutechat-message
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+      - MONGO_URI=${MONGO_URI}
+      - MESSAGE_HISTORY_LIMIT=100
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+      - REDIS_URL=${REDIS_URL}
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - cutechat-net
+
+  worker-service:
+    build: ./worker-service
+    container_name: cutechat-worker
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - REDIS_URL=${REDIS_URL}
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - cutechat-net
+
+  game-service:
+    build: ./game-service
+    container_name: cutechat-game
+    ports:
+      - "5004:5004"
+    environment:
+      - PORT=5004
+      - JWT_SECRET=${JWT_SECRET}
+      - MONGO_URI=${MONGO_URI}
+      - REDIS_URL=${REDIS_URL}
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - cutechat-net
+
+  frontend:
+    build: ./frontend
+    container_name: cutechat-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - REACT_APP_AUTH_URL=http://localhost:5001
+      - REACT_APP_CHAT_URL=http://localhost:5002
+      - REACT_APP_MESSAGE_URL=http://localhost:5003
+      - REACT_APP_GAME_URL=http://localhost:5004
+    depends_on:
+      - auth-service
+      - chat-service
+      - message-service
+      - game-service
+    networks:
+      - cutechat-net
+
+networks:
+  cutechat-net:
+    driver: bridge
+
+volumes:
+  mongo-data:

@@ -1,0 +1,271 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #2c1e35, #120b18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* The Movie Screen Stage */
+.screenStage {
+  width: 90%;
+  max-width: 900px;
+  perspective: 1000px;
+  z-index: 50;
+  position: relative;
+}
+
+.screenBorder {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  background: #000;
+  border: 12px solid #3d2a4d;
+  border-radius: 12px;
+  box-shadow: 
+    0 0 40px rgba(0,0,0,0.8),
+    0 0 25px rgba(255, 128, 191, 0.4);
+  overflow: hidden;
+  transform: rotateX(2deg);
+}
+
+.screenGlow {
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  right: -100px;
+  bottom: -100px;
+  background: radial-gradient(circle at center, rgba(179, 229, 252, 0.2), transparent 70%);
+  z-index: -1;
+  animation: pulsatingGlow 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes pulsatingGlow {
+  0% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 0.3; }
+}
+
+.player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.emptyScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 30, 53, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.emptyScreen:hover { background: rgba(55, 35, 65, 0.85); box-shadow: inset 0 0 60px rgba(255, 128, 191, 0.1); }
+
+.emptyContent {
+  text-align: center;
+  color: #ffb3d9;
+}
+.emptyIcon { font-size: 4rem; opacity: 0.4; margin-bottom: 12px; }
+.emptyText { font-size: 1.2rem; font-weight: 700; font-family: 'Nunito', sans-serif; opacity: 0.7; }
+
+/* The Seating Area */
+.seatingArea {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+  z-index: 100;
+}
+
+.seatRow {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  transform: perspective(1000px) rotateX(10deg);
+}
+
+.seatWrapper {
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.seatWrapper:hover { transform: translateY(-3px) scale(1.05); }
+
+.seatTop {
+  width: 44px;
+  height: 48px;
+  background: linear-gradient(135deg, #ff80bf, #ff4d94);
+  border-radius: 50% 50% 12% 12%;
+  border: 4px solid #3d2a4d;
+  box-shadow: 
+     0 5px 15px rgba(0,0,0,0.3),
+     inset 0 3px 6px rgba(255,255,255,0.4);
+}
+
+.seatBase {
+  width: 54px;
+  height: 18px;
+  background: #ff4d94;
+  border: 4px solid #3d2a4d;
+  border-radius: 8px 8px 18px 18px;
+  margin-top: -6px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.spectator {
+  position: absolute;
+  top: -15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+  animation: seatedFloat 3s ease-in-out infinite;
+}
+
+@keyframes seatedFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+.spectatorAvatar {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #3d2a4d;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: #fff;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+}
+
+.spectatorName {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(0,0,0,0.6);
+  padding: 1px 4px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.isLocal .spectatorName { color: #ff80bf; }
+
+/* Row variations (Depth effect) */
+.seatRow:nth-child(1) { transform: perspective(1000px) rotateX(15deg) scale(0.85); opacity: 0.95; }
+.seatRow:nth-child(2) { transform: perspective(1000px) rotateX(12deg) scale(0.92); opacity: 1; }
+.seatRow:nth-child(3) { transform: perspective(1000px) rotateX(10deg) scale(1); opacity: 1; margin-top: 5px; }
+
+/* Theatre Controls HUD */
+.theatreControls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 200;
+}
+
+.theatreBtn {
+  background: #ff80bf;
+  color: white;
+  border: 2px solid #fff;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 128, 191, 0.4);
+  transition: all 0.3s;
+}
+.theatreBtn:hover { transform: translateY(-3px) scale(1.05); background: #ff4d94; }
+
+.nowPlayingInfo {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  color: #ffb3d9;
+  font-size: 0.8rem;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Input Modal */
+.inputModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(18, 11, 24, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popUp { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+.inputForm {
+  background: white;
+  padding: 30px;
+  border-radius: 28px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 3px solid #ff80bf;
+}
+
+.inputForm h3 { color: #35263d; margin-bottom: 20px; font-weight: 800; }
+.inputForm input {
+  width: 100%;
+  padding: 14px 18px;
+  background: #fdf2f8;
+  border: 2px solid #eee;
+  border-radius: 16px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  color: #35263d;
+  margin-bottom: 20px;
+}
+.inputForm input:focus { border-color: #ff80bf; }
+
+.formActions {
+  display: flex;
+  gap: 12px;
+}
+.formActions button { flex: 1; padding: 12px; border-radius: 14px; border: none; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+.formActions button[type="button"] { background: #eee; color: #8a7a9a; }
+.formActions button[type="submit"] { background: #ff80bf; color: white; }
+.formActions button:hover { transform: translateY(-2px); opacity: 0.9; }

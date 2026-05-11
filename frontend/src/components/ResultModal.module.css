@@ -1,0 +1,197 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(255, 240, 245, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: 'Nunito', sans-serif;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.card {
+  background: #ffffff;
+  border: 6px solid #ffb3d9;
+  border-radius: 40px;
+  padding: 40px;
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: 0 15px 0 #ffb3d9, 0 25px 50px rgba(255, 128, 191, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+}
+
+.card::before {
+  content: '✨';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  font-size: 2rem;
+}
+
+.card::after {
+  content: '🌸';
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  font-size: 2rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.trophyEmoji {
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 0 rgba(0,0,0,0.1));
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ff80bf;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+.scoreboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scoreRow {
+  display: flex;
+  align-items: center;
+  background: #fff5f8;
+  border: 3px solid #ffe6ef;
+  border-radius: 20px;
+  padding: 12px 20px;
+  transition: transform 0.2s;
+}
+
+.scoreRow:hover {
+  transform: translateX(5px);
+}
+
+.scoreRow.winner {
+  background: #fff9e6;
+  border-color: #ffeb3b;
+  box-shadow: 0 4px 0 #ffeb3b;
+}
+
+.scoreRow.me {
+  border-color: #c9a0ff;
+  border-style: dashed;
+}
+
+.rank {
+  font-size: 1.4rem;
+  font-weight: 900;
+  width: 40px;
+  color: #ff80bf;
+}
+
+.playerInfo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  font-size: 1.8rem;
+  background: white;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--player-color, #ffb3d9);
+}
+
+.name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #5d4a66;
+}
+
+.score {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #ff80bf;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.playAgainBtn {
+  background: #85ffcc;
+  color: #2d5a47;
+  border: none;
+  padding: 18px;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #5cd6a2;
+  transition: all 0.1s;
+}
+
+.playAgainBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #5cd6a2;
+}
+
+.playAgainBtn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #5cd6a2;
+}
+
+.leaveBtn {
+  background: transparent;
+  color: #a0a0a0;
+  border: 3px solid #f0f0f0;
+  padding: 12px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.leaveBtn:hover {
+  background: #fdfdfd;
+  color: #ff80bf;
+  border-color: #ffe6ef;
+}
+
+.footer {
+  font-size: 0.7rem;
+  color: #ddd;
+  font-family: monospace;
+}

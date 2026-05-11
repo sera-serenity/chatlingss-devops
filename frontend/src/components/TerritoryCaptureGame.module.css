@@ -1,0 +1,178 @@
+.hudOverlay {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-end;
+    z-index: 50;
+}
+
+.timeBoard {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #ff5757;
+    border: 3px solid #ffb3d9;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.scoreBoard {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 20px;
+    border: 3px solid #c9a0ff;
+    width: 220px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.scoreHead {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #8a7a9a;
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 2px dashed #ffb3d9;
+    padding-bottom: 5px;
+}
+
+.scoreRow {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #35263d;
+    margin-bottom: 5px;
+}
+
+.points {
+    color: #ff80bf;
+    background: #fff0fb;
+    padding: 2px 10px;
+    border-radius: 12px;
+}
+
+.notifications {
+    position: absolute;
+    top: 70px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 50;
+}
+
+.notifItem {
+    background: rgba(53, 38, 61, 0.85);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    animation: slideIn 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.backBtn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 12px 24px;
+    background: #ffb3d9;
+    color: #35263d;
+    border: none;
+    border-radius: 25px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #ff80bf;
+    transition: all 0.1s;
+    z-index: 100;
+}
+
+.backBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #ff80bf;
+}
+
+.backBtn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #ff80bf;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Overlays ── */
+.waitingOverlay, .countdownOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    font-family: 'Nunito', sans-serif;
+}
+
+.waitingBox {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    border: 6px solid #ffb3d9;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.waitingEmoji {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.playerCount {
+    margin-top: 20px;
+    background: #fff0fb;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 800;
+    color: #ff80bf;
+    display: inline-block;
+}
+
+.countdownOverlay {
+    background: rgba(255, 179, 217, 0.4);
+    flex-direction: column;
+}
+
+.countdownValue {
+    font-size: 10rem;
+    font-weight: 900;
+    color: #ff80bf;
+    text-shadow: 0 10px 0 #ffffff;
+    animation: pulse 1s infinite;
+}
+
+.countdownText {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #35263d;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}

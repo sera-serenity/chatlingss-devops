@@ -1,0 +1,14 @@
+.canvasBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+}
+
+/* Ensure the overlay is still there for the card to sit on */
+.overlay {
+  z-index: 1;
+}
