@@ -102,10 +102,10 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-      - REACT_APP_AUTH_URL=http://localhost:5001
-      - REACT_APP_CHAT_URL=http://localhost:5002
-      - REACT_APP_MESSAGE_URL=http://localhost:5003
-      - REACT_APP_GAME_URL=http://localhost:5004
+      - REACT_APP_AUTH_URL=${REACT_APP_AUTH_URL}
+      - REACT_APP_CHAT_URL=${REACT_APP_CHAT_URL}
+      - REACT_APP_MESSAGE_URL=${REACT_APP_MESSAGE_URL}
+      - REACT_APP_GAME_URL=${REACT_APP_GAME_URL}
     depends_on:
       - auth-service
       - chat-service
