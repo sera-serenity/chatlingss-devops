@@ -29,7 +29,8 @@ export default function DrawingGuessGame({ token, user, room, onLogout, onLeaveR
   const logRef = useRef(null);
 
   useEffect(() => {
-    const s = io(process.env.REACT_APP_GAME_URL || 'http://localhost:5004', {
+    const gameUrl = (process.env.REACT_APP_GAME_URL && !process.env.REACT_APP_GAME_URL.startsWith('http')) ? `https://${process.env.REACT_APP_GAME_URL}` : (process.env.REACT_APP_GAME_URL || 'http://localhost:5004');
+    const s = io(gameUrl, {
       auth: { token },
       query: { roomId: room._id || room.name, roomType: 'game', gameType: 'drawing_guess' }
     });

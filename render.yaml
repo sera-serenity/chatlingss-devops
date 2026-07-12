@@ -94,22 +94,22 @@ services:
         fromService:
           name: cutechat-auth
           type: web
-          property: url
+          property: host
       - key: REACT_APP_CHAT_URL
         fromService:
           name: cutechat-chat
           type: web
-          property: url
+          property: host
       - key: REACT_APP_MESSAGE_URL
         fromService:
           name: cutechat-message
           type: web
-          property: url
+          property: host
       - key: REACT_APP_GAME_URL
         fromService:
           name: cutechat-game
           type: web
-          property: url
+          property: host
 
 envVarGroups:
   - name: cutechat-env

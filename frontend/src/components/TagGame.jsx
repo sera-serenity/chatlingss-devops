@@ -37,7 +37,8 @@ export default function TagGame({ token, user, room, onLeaveRoom }) {
   };
 
   useEffect(() => {
-    const s = io(process.env.REACT_APP_GAME_URL || 'http://localhost:5004', {
+    const gameUrl = (process.env.REACT_APP_GAME_URL && !process.env.REACT_APP_GAME_URL.startsWith('http')) ? `https://${process.env.REACT_APP_GAME_URL}` : (process.env.REACT_APP_GAME_URL || 'http://localhost:5004');
+    const s = io(gameUrl, {
       auth: { token },
       query: { roomId: room._id || room.name, roomType: 'game', gameType: 'tag_game' }
     });

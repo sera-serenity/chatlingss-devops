@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_MESSAGE_URL || 'http://localhost:5003';
+const BASE_URL = (process.env.REACT_APP_MESSAGE_URL && !process.env.REACT_APP_MESSAGE_URL.startsWith('http')) ? `https://${process.env.REACT_APP_MESSAGE_URL}` : (process.env.REACT_APP_MESSAGE_URL || 'http://localhost:5003');
 
 const api = axios.create({ baseURL: BASE_URL });
 

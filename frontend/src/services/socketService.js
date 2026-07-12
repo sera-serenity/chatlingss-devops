@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 
-const CHAT_URL = process.env.REACT_APP_CHAT_URL || 'http://localhost:5002';
-const GAME_URL = process.env.REACT_APP_GAME_URL || 'http://localhost:5004';
+const CHAT_URL = (process.env.REACT_APP_CHAT_URL && !process.env.REACT_APP_CHAT_URL.startsWith('http')) ? `https://${process.env.REACT_APP_CHAT_URL}` : (process.env.REACT_APP_CHAT_URL || 'http://localhost:5002');
+const GAME_URL = (process.env.REACT_APP_GAME_URL && !process.env.REACT_APP_GAME_URL.startsWith('http')) ? `https://${process.env.REACT_APP_GAME_URL}` : (process.env.REACT_APP_GAME_URL || 'http://localhost:5004');
 
 let socket = null;
 let gameSocket = null;

@@ -391,7 +391,8 @@ export default function ChatRoom({ token, user, room, onLogout, onLeaveRoom }) {
       formData.append('userId', user?.id || 'anonymous');
       formData.append('roomId', roomId);
 
-      const resp = await fetch(`${process.env.REACT_APP_MESSAGE_URL || 'http://localhost:5003'}/api/files/upload`, {
+      const messageUrl = (process.env.REACT_APP_MESSAGE_URL && !process.env.REACT_APP_MESSAGE_URL.startsWith('http')) ? `https://${process.env.REACT_APP_MESSAGE_URL}` : (process.env.REACT_APP_MESSAGE_URL || 'http://localhost:5003');
+      const resp = await fetch(`${messageUrl}/api/files/upload`, {
         method: 'POST',
         body: formData
       });
@@ -425,7 +426,8 @@ export default function ChatRoom({ token, user, room, onLogout, onLeaveRoom }) {
     formData.append('roomId', roomId);
 
     try {
-      const resp = await fetch(`${process.env.REACT_APP_MESSAGE_URL || 'http://localhost:5003'}/api/files/upload`, {
+      const messageUrl = (process.env.REACT_APP_MESSAGE_URL && !process.env.REACT_APP_MESSAGE_URL.startsWith('http')) ? `https://${process.env.REACT_APP_MESSAGE_URL}` : (process.env.REACT_APP_MESSAGE_URL || 'http://localhost:5003');
+      const resp = await fetch(`${messageUrl}/api/files/upload`, {
         method: 'POST',
         body: formData
       });
