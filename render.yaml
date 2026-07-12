@@ -83,12 +83,12 @@ services:
       - fromGroup: cutechat-env
 
   # ─── FRONTEND STATIC SITE ───────────────────────────────────────────────────
-  - type: static
+  - type: web
     name: cutechat-frontend
     runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishPath: frontend/build
+    staticPublishPath: build
     envVars:
       - key: REACT_APP_AUTH_URL
         fromService:
