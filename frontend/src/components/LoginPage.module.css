@@ -214,3 +214,28 @@
 }
 .submitBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(255,159,207,0.48); }
 .submitBtn:disabled { opacity: 0.55; cursor: default; transform: none; }
+
+/* ---- Responsive / Mobile Optimizations ---- */
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 20px 24px;
+    border-radius: 28px;
+    border-width: 3px;
+  }
+  .logo h1 {
+    font-size: 2.2rem;
+  }
+  .row {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .avatarPicker {
+    gap: 6px;
+    justify-content: center;
+  }
+  .avatarChip {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+

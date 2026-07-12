@@ -7,6 +7,7 @@ import {
 import styles from './TagGame.module.css';
 import ResultModal from './ResultModal';
 import TournamentOverlay from './TournamentOverlay';
+import MobileControls from './MobileControls';
 
 // Tag specific zoomed-out map dimensions
 const TAG_VW = 1800;
@@ -256,6 +257,7 @@ export default function TagGame({ token, user, room, onLeaveRoom }) {
 
       <div className={styles.canvasContainer}>
         <canvas ref={canvasRef} width={TAG_VW * TAG_SCALE} height={TAG_VH * TAG_SCALE} className={styles.canvas} />
+        <MobileControls />
         
         {/* ── Waiting UI ── */}
         {gameState?.state === 'waiting' && (

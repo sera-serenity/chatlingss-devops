@@ -3,6 +3,7 @@ import StudyCanvas from './StudyCanvas';
 import DrawingBoard from './DrawingBoard'; // Reuse for whiteboard zone
 import StickyBoard from './StickyBoard';
 import styles from './StudyRoom.module.css';
+import MobileControls from './MobileControls';
 
 export default function StudyRoom({ user, players, roomId, socket }) {
   const [activeZone, setActiveZone] = useState(null); // 'desk', 'whiteboard', 'shelf', 'break', 'help', null
@@ -64,6 +65,7 @@ export default function StudyRoom({ user, players, roomId, socket }) {
         onZoneEnter={handleZoneEnter}
         onZoneLeave={handleZoneLeave}
       />
+      <MobileControls />
       
       {/* Absolute HUD Layer above canvas */}
       <div className={styles.hudOverlay}>

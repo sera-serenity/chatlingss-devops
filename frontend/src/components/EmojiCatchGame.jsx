@@ -6,6 +6,7 @@ import {
 } from '../utils/gameRender';
 import styles from './EmojiCatchGame.module.css';
 import ResultModal from './ResultModal';
+import MobileControls from './MobileControls';
 
 const EC_SCALE = 0.55;
 
@@ -248,6 +249,7 @@ export default function EmojiCatchGame({ token, user, room, onLeaveRoom }) {
 
       <div className={styles.canvasContainer}>
         <canvas ref={canvasRef} width={VW * EC_SCALE} height={VH * EC_SCALE} className={styles.canvas} />
+        <MobileControls />
         <div className={styles.notifications}>
           {notifications.map(n => (
             <div key={n.id} className={styles.notifItem}>{n.text}</div>

@@ -1,0 +1,128 @@
+services:
+  # ─── REDIS INSTANCE ────────────────────────────────────────────────────────
+  - type: redis
+    name: cutechat-redis
+    ipAllowList: []
+    plan: free
+
+  # ─── AUTH SERVICE ──────────────────────────────────────────────────────────
+  - type: web
+    name: cutechat-auth
+    runtime: docker
+    rootDir: auth-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5001
+      - fromGroup: cutechat-env
+
+  # ─── MESSAGE SERVICE ────────────────────────────────────────────────────────
+  - type: web
+    name: cutechat-message
+    runtime: docker
+    rootDir: message-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5003
+      - key: REDIS_URL
+        fromService:
+          name: cutechat-redis
+          type: redis
+          property: connectionString
+      - key: MESSAGE_HISTORY_LIMIT
+        value: "100"
+      - fromGroup: cutechat-env
+
+  # ─── CHAT SERVICE ───────────────────────────────────────────────────────────
+  - type: web
+    name: cutechat-chat
+    runtime: docker
+    rootDir: chat-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5002
+      - key: MESSAGE_SERVICE_URL
+        value: http://cutechat-message:5003
+      - fromGroup: cutechat-env
+
+  # ─── GAME SERVICE ───────────────────────────────────────────────────────────
+  - type: web
+    name: cutechat-game
+    runtime: docker
+    rootDir: game-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5004
+      - key: REDIS_URL
+        fromService:
+          name: cutechat-redis
+          type: redis
+          property: connectionString
+      - fromGroup: cutechat-env
+
+  # ─── WORKER SERVICE ─────────────────────────────────────────────────────────
+  - type: worker
+    name: cutechat-worker
+    runtime: docker
+    rootDir: worker-service
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          name: cutechat-redis
+          type: redis
+          property: connectionString
+      - fromGroup: cutechat-env
+
+  # ─── FRONTEND STATIC SITE ───────────────────────────────────────────────────
+  - type: static
+    name: cutechat-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: frontend/build
+    envVars:
+      - key: REACT_APP_AUTH_URL
+        fromService:
+          name: cutechat-auth
+          type: web
+          property: url
+      - key: REACT_APP_CHAT_URL
+        fromService:
+          name: cutechat-chat
+          type: web
+          property: url
+      - key: REACT_APP_MESSAGE_URL
+        fromService:
+          name: cutechat-message
+          type: web
+          property: url
+      - key: REACT_APP_GAME_URL
+        fromService:
+          name: cutechat-game
+          type: web
+          property: url
+
+envGroups:
+  - name: cutechat-env
+    envVars:
+      - key: MONGO_URI
+        value: YOUR_MONGODB_URI_HERE
+      - key: JWT_SECRET
+        value: YOUR_JWT_SECRET_HERE
+      - key: AWS_ACCESS_KEY_ID
+        value: YOUR_AWS_ACCESS_KEY_ID_HERE
+      - key: AWS_SECRET_ACCESS_KEY
+        value: YOUR_AWS_SECRET_ACCESS_KEY_HERE
+      - key: AWS_REGION
+        value: YOUR_AWS_REGION_HERE
+      - key: AWS_BUCKET_NAME
+        value: YOUR_AWS_BUCKET_NAME_HERE

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { getSocket } from '../services/socketService';
+import MobileControls from './MobileControls';
 
 const AVATAR_EMOJI = { bunny: '🐰', cat: '🐱', dog: '🐶' };
 
@@ -824,6 +825,7 @@ const GameCanvas = ({ user, roomId, roomTheme, socket }) => {
           </button>
         ))}
       </div>
+      <MobileControls />
     </div>
   );
 };

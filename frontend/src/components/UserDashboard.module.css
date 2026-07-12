@@ -398,3 +398,60 @@
     50% { transform: scale(1.05); opacity: 0.8; }
     100% { transform: scale(1); opacity: 1; }
 }
+
+/* ── Mobile / Responsive Adaptations ── */
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+    height: 90vh;
+    border-radius: 30px;
+    border-width: 4px;
+  }
+  .closeBtn {
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    border-radius: 12px;
+  }
+  .layout {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .preview {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px dashed #ffecf5;
+    padding: 30px 20px 20px;
+  }
+  .content {
+    padding: 25px 20px;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+  .appearanceSection {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .avatarGrid {
+    flex-wrap: wrap;
+  }
+  .row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .statCards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .statCard {
+    padding: 15px 10px;
+    border-radius: 18px;
+  }
+  .cardVal {
+    font-size: 1.4rem;
+  }
+}
+

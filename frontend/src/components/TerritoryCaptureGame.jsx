@@ -6,6 +6,7 @@ import {
 import styles from './TerritoryCaptureGame.module.css';
 import ResultModal from './ResultModal';
 import TournamentOverlay from './TournamentOverlay';
+import MobileControls from './MobileControls';
 
 const CELL_SIZE = 60; // Increased from 40
 
@@ -251,6 +252,7 @@ export default function TerritoryCaptureGame({ user, players: initialPlayers, ro
           </div>
       )}
       <canvas ref={canvasRef} width={dimensions.width} height={dimensions.height} style={{ width:'100%', height:'100%' }} />
+      <MobileControls />
       
       {/* ── Waiting UI ── */}
       {gameState?.state === 'waiting' && (

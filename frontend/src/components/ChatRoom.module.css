@@ -695,3 +695,98 @@
 @keyframes slideInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 @keyframes slideInRight { from { transform: translateX(30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* ── Mobile / Responsive Adaptations ── */
+@media (max-width: 768px) {
+  .header {
+    padding: 8px 12px;
+    height: auto;
+    min-height: 56px;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .logo {
+    display: none; /* Hide logo to save space on mobile */
+  }
+  .roomBadge {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+  }
+  .controls {
+    gap: 6px;
+  }
+  .headerBtn {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+  .onlineBadge {
+    padding: 5px 12px;
+    font-size: 0.75rem;
+  }
+  .logoutBtn {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .chatOverlay {
+    left: 10px;
+    top: 70px;
+    width: calc(100% - 20px);
+    height: 150px;
+  }
+  .chatLog {
+    padding: 10px 14px;
+    border-radius: 16px;
+    border-width: 2px;
+  }
+  .message {
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+  }
+  .msgText {
+    font-size: 0.9rem;
+  }
+  .msgImage {
+    max-height: 180px;
+  }
+  
+  .bottomBar {
+    bottom: 0;
+    width: 100%;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .input {
+    font-size: 0.95rem;
+  }
+  .sendBtn {
+    padding: 8px 18px;
+    font-size: 0.9rem;
+  }
+  .inputAvatar, .cameraBtn, .attachBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+  
+  .sidePanel {
+    right: 10px;
+    top: 70px;
+    bottom: 80px;
+    width: calc(100% - 20px);
+  }
+  .filePanel {
+    right: 10px;
+    top: 70px;
+    width: calc(100% - 20px);
+  }
+}
+

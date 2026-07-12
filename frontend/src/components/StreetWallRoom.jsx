@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import styles from './StreetWallRoom.module.css';
+import MobileControls from './MobileControls';
 
 export default function StreetWallRoom({ user, players, roomId, socket, hideUI, setHideUI }) {
   const canvasRef = useRef(null);
@@ -417,6 +418,7 @@ export default function StreetWallRoom({ user, players, roomId, socket, hideUI, 
         onPointerOut={stopDrawing}
         onPointerCancel={stopDrawing}
       />
+      <MobileControls />
 
       <div className={styles.toolbar}>
         <div className={styles.toolSection} style={{ flexDirection: 'column' }}>
