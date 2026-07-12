@@ -111,7 +111,7 @@ services:
           type: web
           property: url
 
-envGroups:
+envVarGroups:
   - name: cutechat-env
     envVars:
       - key: MONGO_URI
