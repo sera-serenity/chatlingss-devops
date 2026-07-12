@@ -68,7 +68,7 @@ services:
       - fromGroup: cutechat-env
 
   # ─── WORKER SERVICE ─────────────────────────────────────────────────────────
-  - type: worker
+  - type: web
     name: cutechat-worker
     runtime: docker
     rootDir: worker-service

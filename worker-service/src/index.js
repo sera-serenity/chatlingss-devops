@@ -201,3 +201,14 @@ console.log(JSON.stringify({
   service: 'worker-service', event: 'WORKER_STARTED',
   queues: ['gameQueue', 'file-processing'], timestamp: new Date().toISOString()
 }));
+
+// ─── DUMMY WEB SERVER FOR RENDER FREE TIER ────────────────────────────────────
+// Render's free tier only supports Web Services. A Web Service must bind to a port.
+const http = require('http');
+const port = process.env.PORT || 5005;
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Worker is running\\n');
+}).listen(port, () => {
+  console.log(`Worker dummy web server listening on port ${port}`);
+});
