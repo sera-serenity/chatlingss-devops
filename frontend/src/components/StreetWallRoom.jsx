@@ -190,12 +190,14 @@ export default function StreetWallRoom({ user, players, roomId, socket, hideUI, 
     };
 
     const drawScene = () => {
-      const FLOOR_Y = canvas.height * 0.85;
+      const SCALE = window.innerWidth <= 768 ? 0.65 : 1.0;
+      const FLOOR_Y = (canvas.height / SCALE) * 0.85;
 
       ctx.fillStyle = '#2b2a33';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       ctx.save();
+      ctx.scale(SCALE, SCALE);
       ctx.translate(-cameraXRef.current, 0);
 
       // The Wall
@@ -284,7 +286,9 @@ export default function StreetWallRoom({ user, players, roomId, socket, hideUI, 
       const dt = Math.min((now - lastTimeRef.current) / 1000, 0.1);
       lastTimeRef.current = now;
 
-      const FLOOR_Y = canvas.height * 0.85;
+      const SCALE = window.innerWidth <= 768 ? 0.65 : 1.0;
+      const VIEW_W = canvas.width / SCALE;
+      const FLOOR_Y = (canvas.height / SCALE) * 0.85;
 
       local.vx = 0;
       if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
@@ -311,9 +315,9 @@ export default function StreetWallRoom({ user, players, roomId, socket, hideUI, 
       if (local.x < 0) local.x = 0;
       if (local.x > SCENE_W - CW) local.x = SCENE_W - CW;
 
-      cameraXRef.current = local.x - canvas.width/2;
+      cameraXRef.current = local.x - VIEW_W/2;
       if (cameraXRef.current < 0) cameraXRef.current = 0;
-      if (cameraXRef.current > SCENE_W - canvas.width) cameraXRef.current = SCENE_W - canvas.width;
+      if (cameraXRef.current > SCENE_W - VIEW_W) cameraXRef.current = SCENE_W - VIEW_W;
 
       if (!local.lastSyncTime) local.lastSyncTime = 0;
       const hasMoved = Math.abs(local.x - (local.lastSentX||0)) > 1;
@@ -354,9 +358,10 @@ export default function StreetWallRoom({ user, players, roomId, socket, hideUI, 
     const rect = canvasRef.current.getBoundingClientRect();
     const cx = e.touches ? e.touches[0].clientX : e.clientX;
     const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    const SCALE = window.innerWidth <= 768 ? 0.65 : 1.0;
     return {
-      x: (cx - rect.left) + cameraXRef.current,
-      y: cy - rect.top
+      x: ((cx - rect.left) / SCALE) + cameraXRef.current,
+      y: (cy - rect.top) / SCALE
     };
   };
 

@@ -735,12 +735,16 @@
     left: 10px;
     top: 70px;
     width: calc(100% - 20px);
-    height: 150px;
+    height: 35vh;
+    max-height: 200px;
   }
   .chatLog {
     padding: 10px 14px;
-    border-radius: 16px;
-    border-width: 2px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(80, 58, 90, 0.12);
   }
   .message {
     padding: 8px 12px;

@@ -203,7 +203,7 @@ export default function TerritoryCaptureGame({ user, players: initialPlayers, ro
         ].sort((a,b) => (a.y+CH) - (b.y+CH));
 
         playersList.forEach(p => {
-            drawCharacter(ctx, {...p, mood: p.mood || 'happy'}, p.username || 'Friend', { prop: 'bucket', scale: 1.8 });
+            drawCharacter(ctx, {...p, mood: p.mood || 'happy'}, p.username || 'Friend', { prop: 'bucket', scale: typeof window !== 'undefined' && window.innerWidth <= 768 ? 1.1 : 1.8 });
         });
 
         animId = requestAnimationFrame(loop);

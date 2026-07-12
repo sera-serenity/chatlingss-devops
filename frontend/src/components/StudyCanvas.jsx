@@ -30,9 +30,10 @@ const StudyCanvas = ({ user, players, socket, zones, onZoneEnter, onZoneLeave })
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     
+    const SCALE = window.innerWidth <= 768 ? 0.55 : 1.0;
     const SCENE_W = 2800; // Increased width to fit all rooms nicely
-    const VH = canvas.height;
-    const VW = canvas.width; // Viewport width
+    const VH = canvas.height / SCALE;
+    const VW = canvas.width / SCALE; // Viewport width
     const FLOOR_Y = VH * 0.88;
     const G = 2200;
     const JUMP_V = 880;
@@ -323,8 +324,9 @@ const StudyCanvas = ({ user, players, socket, zones, onZoneEnter, onZoneLeave })
       }
 
       // Draw
-      ctx.clearRect(0,0,VW,VH);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
       ctx.save();
+      ctx.scale(SCALE, SCALE);
       ctx.translate(-cameraX, 0); // pan camera
 
       drawRoom(now);

@@ -7,8 +7,7 @@ import {
 import styles from './EmojiCatchGame.module.css';
 import ResultModal from './ResultModal';
 import MobileControls from './MobileControls';
-
-const EC_SCALE = 0.55;
+const EC_SCALE = typeof window !== 'undefined' && window.innerWidth <= 768 ? 0.38 : 0.55;
 
 export default function EmojiCatchGame({ token, user, room, onLeaveRoom }) {
   const canvasRef = useRef(null);

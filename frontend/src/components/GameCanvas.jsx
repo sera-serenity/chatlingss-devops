@@ -69,7 +69,7 @@ const GameCanvas = ({ user, roomId, roomTheme, socket }) => {
     if (!socket) return;
 
     // ---- SCALE SYSTEM ----
-    const SCALE = 0.65; 
+    const SCALE = window.innerWidth <= 768 ? 0.42 : 0.65; 
     const VW = canvas.width / SCALE;
     const VH = canvas.height / SCALE;
     const FLOOR_Y = VH * 0.88; 

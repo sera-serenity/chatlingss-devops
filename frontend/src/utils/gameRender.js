@@ -1,5 +1,5 @@
 // Shared rendering and physics utilities for CuteChat Games
-const SCALE = 0.55; // Zoomed out default
+const SCALE = typeof window !== 'undefined' && window.innerWidth <= 768 ? 0.38 : 0.55; // Zoomed out default for mobile
 const VW = 1200;   // Increased from 800
 const VH = 650;    // Increased from 450
 const CW = 46;     // Character Width

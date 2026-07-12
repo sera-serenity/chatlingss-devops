@@ -12,7 +12,7 @@ import MobileControls from './MobileControls';
 // Tag specific zoomed-out map dimensions
 const TAG_VW = 1800;
 const TAG_VH = 800;
-const TAG_SCALE = 0.45;
+const TAG_SCALE = typeof window !== 'undefined' && window.innerWidth <= 768 ? 0.32 : 0.45;
 
 export default function TagGame({ token, user, room, onLeaveRoom }) {
   const canvasRef = useRef(null);
